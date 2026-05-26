@@ -1,10 +1,13 @@
-
-cat > src/services/auth-service.js << 'EOF'
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-prod';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h';
+
+// Sécurité : JWT_SECRET obligatoire en production
+if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
+    throw new Error('JWT_SECRET est requis en production');
+}
 
 const generateToken = (user) => {
     return jwt.sign(
@@ -23,4 +26,3 @@ const hashPassword = async (plainPassword) => {
 };
 
 module.exports = { generateToken, verifyPassword, hashPassword };
-EOF

@@ -1,5 +1,3 @@
-
-cat > src/api/auth-controller.js << 'EOF'
 const { generateToken, verifyPassword } = require('../services/auth-service');
 const User = require('../models/user');
 
@@ -15,11 +13,14 @@ const login = async (req, res) => {
 
         const user = await User.findByEmail(email);
         if (!user) {
+            // Message générique intentionnel : évite l'énumération des comptes
             return res.status(401).json({ error: 'Identifiants invalides' });
         }
 
         const isValid = await verifyPassword(password, user.password_hash);
         if (!isValid) {
+            // Même message que ci-dessus — un attaquant ne peut pas
+            // distinguer "email inexistant" de "mauvais mot de passe"
             return res.status(401).json({ error: 'Identifiants invalides' });
         }
 
@@ -35,4 +36,3 @@ const login = async (req, res) => {
 };
 
 module.exports = { login };
-EOF
