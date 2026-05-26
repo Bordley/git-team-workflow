@@ -1,9 +1,8 @@
-
-
 const express = require('express');
 const router = express.Router();
 const { login } = require('./api/auth-controller');
 const { authenticate } = require('./middleware/auth');
+const { getUserById } = require('./api/user-controller');
 
 // Routes publiques
 router.get('/health', (req, res) => {
@@ -13,7 +12,10 @@ router.get('/health', (req, res) => {
 // Auth routes
 router.post('/auth/login', login);
 
-// Routes protégées (exemple)
+// User routes (protégées par JWT)
+router.get('/users/:id', authenticate, getUserById);
+
+// Exemple route protégée
 router.get('/protected', authenticate, (req, res) => {
     res.json({ message: `Bonjour ${req.user.email}` });
 });
