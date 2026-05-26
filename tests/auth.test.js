@@ -1,5 +1,5 @@
 
-cat > tests/auth.test.js << 'EOF'
+
 const request = require('supertest');
 const app = require('../src/app');
 
@@ -27,4 +27,3 @@ describe('POST /auth/login', () => {
         expect(res.body).toHaveProperty('user');
     });
 });
-EOF

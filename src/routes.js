@@ -1,5 +1,5 @@
 
-cat > src/routes.js << 'EOF'
+
 const express = require('express');
 const router = express.Router();
 const { login } = require('./api/auth-controller');
@@ -19,4 +19,3 @@ router.get('/protected', authenticate, (req, res) => {
 });
 
 module.exports = router;
-EOF

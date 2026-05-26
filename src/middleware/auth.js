@@ -1,5 +1,5 @@
 
-cat > src/middleware/auth.js << 'EOF'
+
 const jwt = require('jsonwebtoken');
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret-change-in-prod';
@@ -27,4 +27,3 @@ const authenticate = (req, res, next) => {
 };
 
 module.exports = { authenticate };
-EOF
